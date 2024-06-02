@@ -1,0 +1,36 @@
+[
+    {
+        "task": "Count all users, count all targets, count all actions",
+        "query": "MATCH (u: User)-[a: ACTION]->(t:Target) RETURN count(distinct a.id) as numOfActions, count(distinct u.id) as numOfUsers, count(distinct t.id) as numOfTargets"
+    },
+
+    {
+        "task": "Show all actions (actionID) and targets (targetID) of a specific user (choose one)",
+        "query": "MATCH (u:User {id:42})-[a: ACTION]->(t:Target) RETURN DISTINCT a.id as actionID, t.id as targetID"
+    },
+    
+    {
+        "task": "For each user, count his/her actions",
+        "query": "MATCH (u:User)-[a:ACTION]->(:Target) RETURN distinct u.id as userID, count(distinct a.id) as numOfActions"
+    },
+    
+    {
+        "task": "For each target, count how many users have done this target",
+        "query": "MATCH (u:User)-[:ACTION]->(t:Target) RETURN distinct t.id as targetID, count(distinct u.id) as numOfUsersDoneTarget"
+    },
+    
+    {
+        "task": "Count the average actions per user",
+        "query": "MATCH (u:User)-[a:ACTION]->(:Target) WITH u.id as userID, COUNT(DISTINCT a.id) as numOfActions RETURN AVG(numOfActions) as averageActionsPerUser"
+    },
+    
+    {
+        "task": "Show the userID and the targetID, if the action has positive Feature2",
+        "query": "MATCH (u:User)-[a:ACTION]->(t:Target) WHERE a.feature2 > 0 RETURN DISTINCT u.id as userID, t.id as targetID"
+    },
+    
+    {
+        "task": "For each targetID, count the actions with label '1'",
+        "query": "MATCH (:User)-[a:ACTION {label: 1}]->(t:Target) RETURN t.id as targetID, COUNT(DISTINCT a.id) as numberOfActionsWithLabel1"
+    }
+]
